@@ -1,59 +1,51 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+    import { base } from '$app/paths'
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
-
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
+<div class="app">
+    <main>
+        <section>
+            <h1>preload triggered on hover</h1>
+            <div data-sveltekit-preload-data="hover">
+                <a href="{base}/1">1. PARENT: preload-data, SELF: none</a>
+            </div>
+            <div data-sveltekit-preload-data="hover">
+                <a href="{base}/2" data-sveltekit-preload-code="hover">2. PARENT: preload-data, SELF: preload-code</a>
+            </div>
+            <div data-sveltekit-preload-code="hover">
+                <a href="{base}/3">3. PARENT: preload-code, SELF: none</a>
+            </div>
+            <div data-sveltekit-preload-code="hover">
+                <a href="{base}/4" data-sveltekit-preload-data="hover">4. PARENT: preload-code, SELF: preload-data</a>
+            </div>
+            <div>
+                <a href="{base}/5" data-sveltekit-preload-data="hover">5. PARENT: none, SELF: preload-data</a>
+            </div>
+            <div>
+                <a href="{base}/6" data-sveltekit-preload-code="hover">6. PARENT: none, SELF: preload-code</a>
+            </div>
+        </section>
+    </main>
+</div>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: monospace;
+    }
 
-	h1 {
-		width: 100%;
-	}
+    section div {
+        margin: 1rem 0;
+    }
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
+    a {
+        display: block;
+        text-decoration: none;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        padding: 1rem;
+    }
 </style>
